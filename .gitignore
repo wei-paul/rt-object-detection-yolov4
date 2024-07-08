@@ -1,0 +1,6 @@
+/myenv
+yolov4-tiny-custom_last.weights
+/shuffled_images
+/obj
+__pycache__/
+debug.bmp
