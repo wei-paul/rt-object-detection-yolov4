@@ -112,8 +112,18 @@ img_size: Represents the size of the input image that will be processed by the Y
 
 cfg_file: This parameter represents the path to the configuration file of the YOLOv4-tiny model. The configuration file contains the architecture and hyperparameters of the model. Typically a .cfg file that defines the layers, connections and settings of the neural network. Typically cfg_file is used along with the weights_file to load the pre-trained YOLOv4-tiny model using the cv.dnn.readNetFromDarknet() function from the OpenCV library. 
 
-weights_file: This parameter represents the path to the weights file of the YOLOv4-tiny model. This file contains the learned parameters of the pre-trained model. Typicaly a .weights file that holds the trained weights of the neural network. 
+weights_file: This parameter represents the path to the weights file of the YOLOv4-tiny model. This file contains the learned parameters of the pre-trained model. Typicaly a .weights file that holds the trained weights of the neural network.
 ```
+
+Now digging deeper into the code, we will see how the ImageProcessor class is initiated.
+1. Setting a random seed. In machine learning and computer vision tasks, randomness is often involved in various operations, such as weight initialization, data shuffling, or augmentations. By setting a random seed, you ensure that the random operations generate the same sequence of random numbers every time the code is run, making the results reproducible. (i.e. if typed numpy.random.rand(4) and want the same "random" number generated everytime, you have to "np.random.seed()", otherwise the "random" number will be different everytime). Honestly, this line isn't necessary in this specific case, but in the future if the model's weights are randomly initialized, setting a random seed ensures that the same initial weights are used each time the model is trained, leading to reproducible training results. 
+2. Load the YOLOv4-tiny model using provided config file(cfg_file) and weights file (weights_file) with cv.dnn.readNetFromDarknet()
+3. Set the preferred backend for the model to OpenCV's DNN module using self.net.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV)
+4. Retrieve the names of the output layers from the model and store them in self.ln.
+5. Set the image width (self.W) and height (self.H) based on the provided img_size.
+6. Read the class names from the obj.names file and store them in the self.classes dictionary.
+7. Define a list of colors (self.colors) for drawing bounding boxes around detected objects.
+
 
 
 
