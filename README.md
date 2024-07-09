@@ -102,6 +102,19 @@ Next, img = np.ascontiguousarray(img) ensures that the NumPy array is contiguous
 * A contiguous array is an array whose elements are stored in a contiguous block of memory, meaning that the elements are stored sequentially without any gaps/strides between them. In other words, the memory layout of a continguous array is such that the elements are laid out in a single, continuous block of memory. 
 * In Numpy, there are two types: C-contiguous (default)(row-major order) (np.ascontiguousarray(img)) , and F-contiguous (column-major order)( np.asfortranarray(img)).
 
-
 Lastly, the method returns the captured window image as a NumPy array.
+
+
+Now that we have understood/successfully captured the window image (as a NumPy array), we now have to process that array. To do so, let's look at the imageprocessor.py
+This function takes three parameters: 
+```
+img_size: Represents the size of the input image that will be processed by the YOLOv4-tiny model. Expected to be a tuple or list containing the width and height of the image (416, 416). the img_size is used to set the self.W and self.H attributes of the ImageProcessor instance, which store the width and height of the image, respectively.
+
+cfg_file: This parameter represents the path to the configuration file of the YOLOv4-tiny model. The configuration file contains the architecture and hyperparameters of the model. Typically a .cfg file that defines the layers, connections and settings of the neural network. Typically cfg_file is used along with the weights_file to load the pre-trained YOLOv4-tiny model using the cv.dnn.readNetFromDarknet() function from the OpenCV library. 
+
+weights_file: This parameter represents the path to the weights file of the YOLOv4-tiny model. This file contains the learned parameters of the pre-trained model. Typicaly a .weights file that holds the trained weights of the neural network. 
+```
+
+
+
 
