@@ -1,4 +1,5 @@
 This repository serves as a personal learning resource for understanding YOLOv4-tiny and training custom object detection models. In this repository you will find a step-by-step guide detailing a small project I undertook to implement real-time object detection. The project focuses on detecting enemies in the game "Vampire Survivors" and provides insights into the process of training and utilizing a YOLOv4-tiny model for this purpose. By following the outlined steps, you can gain practical knowledge on how to utilize image capture, train your own object detection models, and potentially applying them to real-world scenarios.
+Note: Some explanations might seem lengthy, due to me cherry-picking concepts I am not familiar with, possibly leading to going off on a tangent/down the rabbit hole. Please be advised.
 
 ![alt text](image.png)
 
@@ -67,7 +68,7 @@ Now that everything is prepared for the capturing of the window screenshot, the 
 
 ```
 (https://github.com/BoboTiG/python-mss/issues/180)
-*NOTE if you need high performance capture (>=60fps) then make sure you aren't opening/closing the handles every time .
+*NOTE if you need high performance capture (>=60fps) then make sure you aren't opening/closing the handles everytime .
 result = windll.user32.PrintWindow(hwnd, save_dc.GetSafeHdc(), 3)
 - This Captures the window image using the PrintWindow() function from the user32.dll library. It takes the window handle, the memory-based device context, and a flag value of 3 (indicating the capture method) (1 = Captures only the client area of the window, excluding the window frame, title bar, and scrollbars., 2 = Renders the full content of the window, including any parts that are currently not visible due to scrolling. 3 = (bitwise OR operation)). The captured image is drawn onto the selected bitmap in the memory-based device context. Specifically designed to capture windows with hardware acceleration enabled.
 ```
@@ -118,13 +119,25 @@ weights_file: This parameter represents the path to the weights file of the YOLO
 Now digging deeper into the code, we will see how the ImageProcessor class is initiated.
 1. Setting a random seed. In machine learning and computer vision tasks, randomness is often involved in various operations, such as weight initialization, data shuffling, or augmentations. By setting a random seed, you ensure that the random operations generate the same sequence of random numbers every time the code is run, making the results reproducible. (i.e. if typed numpy.random.rand(4) and want the same "random" number generated everytime, you have to "np.random.seed()", otherwise the "random" number will be different everytime). Honestly, this line isn't necessary in this specific case, but in the future if the model's weights are randomly initialized, setting a random seed ensures that the same initial weights are used each time the model is trained, leading to reproducible training results. 
 2. Load the YOLOv4-tiny model using provided config file(cfg_file) and weights file (weights_file) with cv.dnn.readNetFromDarknet()
-3. Set the preferred backend for the model to OpenCV's DNN module using self.net.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV)
+3. Set the preferred backend for the model to OpenCV's DNN module using self.net.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV). OpenCV's DNN (Deep Neural Network) module supports multiple backends for running deep learning models. The backend determines the computational framework or library used to execute the model. 
+Some common backends supported by OpenCV's DNN module include:
+OpenCV's default backend: It uses OpenCV's own optimized implementations for running the model.
+CUDA backend: It utilizes NVIDIA's CUDA library to run the model on a GPU, which can provide significant speedup for computationally intensive tasks.
+OpenCL backend: It uses OpenCL (Open Computing Language) to run the model on various devices, including CPUs, GPUs, and other accelerators.
+Intel's Inference Engine backend: It leverages Intel's Inference Engine library for optimized model execution on Intel hardware.
+
 4. Retrieve the names of the output layers from the model and store them in self.ln.
 5. Set the image width (self.W) and height (self.H) based on the provided img_size.
 6. Read the class names from the obj.names file and store them in the self.classes dictionary.
 7. Define a list of colors (self.colors) for drawing bounding boxes around detected objects.
 
 
-
+*TO do: 
+Finish typing the DNN line 
+Figure out what DNN is.
+Are there other alternative to use DNN in this case besides the "alternative", why is it 
+good in this case.
+Spring from DNN and look at other choices
+DNN, CNN, Attention, diffusion, etc.
 
 
