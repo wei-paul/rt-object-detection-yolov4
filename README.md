@@ -125,6 +125,7 @@ OpenCV's default backend: It uses OpenCV's own optimized implementations for run
 CUDA backend: It utilizes NVIDIA's CUDA library to run the model on a GPU, which can provide significant speedup for computationally intensive tasks.
 OpenCL backend: It uses OpenCL (Open Computing Language) to run the model on various devices, including CPUs, GPUs, and other accelerators.
 Intel's Inference Engine backend: It leverages Intel's Inference Engine library for optimized model execution on Intel hardware.
+This current setting (self.net.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV)) is good for general-purpose usage and provides good performance on most systems. **More explanations regarding DNN or differences between different neural networks at the bottom**
 
 4. Retrieve the names of the output layers from the model and store them in self.ln.
 5. Set the image width (self.W) and height (self.H) based on the provided img_size.
@@ -132,12 +133,29 @@ Intel's Inference Engine backend: It leverages Intel's Inference Engine library 
 7. Define a list of colors (self.colors) for drawing bounding boxes around detected objects.
 
 
-*TO do: 
-Finish typing the DNN line 
-Figure out what DNN is.
-Are there other alternative to use DNN in this case besides the "alternative", why is it 
-good in this case.
-Spring from DNN and look at other choices
-DNN, CNN, Attention, diffusion, etc.
 
 
+
+
+
+
+
+
+
+
+
+
+**More information gathered researching different neural networks**
+- There are several types of neural networks, each designed for specific tasks or data types. Some common types of neural networks include the following:
+1. CNN (Convolutional Neural Networks)- Widely used for image and video processing tasks, such as object detection, image classification, and semantic segmentation. Designed to automatically learn hierarchical features from raw pixel data by applying convolutional filters/pooling operations. Popular CNN architectures include LeNet, AlexNet, VGGNet, GoogLeNet (Inception), ResNet, and MobileNet.
+** The reason we're using OpenCV's DNN module instead of directly using a CNN is that the DNN module provides a convenient and efficient way to load and run pre-trained models, such as YOLOv4-tiny, without the need to implement the entire CNN architecture from scratch. 
+
+2. DNN (Deep Neural Network)- OpenCV's DNN module allows you to load pre-trained models from various frameworks, including Darknet (framework used to train YOLO models)
+
+3. RNN (Recurrent Neural Networks) - Designed to process sequential data, such as time series or natural language. RNN have connections between nodes that form directed cycles, allowing information to persist and be processed over multiple time steps.
+
+4. FCNN (Fully Connected Neural Networks)- Commonly used for tasks such as classification, regression, and feature learning. Also known as Dense Networks or Multi-Layer Perceptrons (MLPs), consists of multiple layers of interconnected nodes without any convolutional or recurrent structures. Each node in a layer is connected to all the nodes in the previous layer, forming a fully connected structure. 
+
+5. Autoencoders- Used for dimensionality reduction, denoising, and anomaly detection. Autoencoders are unsupervised learning models that aim to learn efficient representations of input data. Consist of an encoder network that maps the input data to a lower-dimensional representation (latent space) and a decoder network that reconstructs the original data from the latent representation.
+
+6. Generative Adversarial Networks (GANs)- Used for tasks such as image synthesis, style transfer, and data augmentation. GANs are generative models that consists of two neural networks: a generator and a discriminator. A Generator learns to generate realistic samples from a random noise vector, while the discriminator learns to distinguish between real and generated samples.
